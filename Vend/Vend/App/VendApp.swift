@@ -11,7 +11,7 @@ import SwiftUI
 struct VendApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            PhotoListView()
         }
     }
 }
