@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		251A42502E0DCB85004A211A /* GlobalNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 251A424F2E0DCB85004A211A /* GlobalNetworking */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		25C631F42E0C976D008077DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,9 +33,22 @@
 		25C631FD2E0C976D008077DF /* VendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		251A42AC2E0DCE2A004A211A /* Exceptions for "Vend" folder in "Vend" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 25C631E42E0C976C008077DF /* Vend */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		25C631E72E0C976C008077DF /* Vend */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				251A42AC2E0DCE2A004A211A /* Exceptions for "Vend" folder in "Vend" target */,
+			);
 			path = Vend;
 			sourceTree = "<group>";
 		};
@@ -52,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				251A42502E0DCB85004A211A /* GlobalNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +130,7 @@
 			);
 			name = Vend;
 			packageProductDependencies = (
+				251A424F2E0DCB85004A211A /* GlobalNetworking */,
 			);
 			productName = Vend;
 			productReference = 25C631E52E0C976C008077DF /* Vend.app */;
@@ -195,6 +214,9 @@
 			);
 			mainGroup = 25C631DC2E0C976C008077DF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				251A424E2E0DCB85004A211A /* XCRemoteSwiftPackageReference "GlobalNetworking" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 25C631E62E0C976C008077DF /* Products */;
 			projectDirPath = "";
@@ -393,6 +415,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Vend/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -430,6 +453,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Vend/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -583,6 +607,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		251A424E2E0DCB85004A211A /* XCRemoteSwiftPackageReference "GlobalNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cankurtur/GlobalNetworking";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		251A424F2E0DCB85004A211A /* GlobalNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 251A424E2E0DCB85004A211A /* XCRemoteSwiftPackageReference "GlobalNetworking" */;
+			productName = GlobalNetworking;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 25C631DD2E0C976C008077DF /* Project object */;
 }
