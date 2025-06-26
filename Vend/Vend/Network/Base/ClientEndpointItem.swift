@@ -7,6 +7,7 @@
 
 /// Default configuration for client API endpoints.
 extension Endpoint {
+    
     /// Base URL for the API. Ensure this is set properly in the implementation.
     var baseUrl: String {
         return Config.shared.baseUrl
@@ -23,7 +24,7 @@ extension Endpoint {
     }
     
     /// Default HTTP headers for the request.
-    var headers: HTTPHeaders {
+    var headers: HTTPHeaders? {
         let headers = defaultHeaders
         return headers
     }
