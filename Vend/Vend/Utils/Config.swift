@@ -23,4 +23,8 @@ extension Config {
     var baseUrl: String {
         return configs.object(forKey: "baseUrl") as! String
     }
+    
+    var googleAdAdaptiveBannerID: String {
+        return configs.object(forKey: "googleAdAdaptiveBannerID") as! String
+    }
 }
