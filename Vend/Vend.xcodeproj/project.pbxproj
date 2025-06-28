@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		251A42502E0DCB85004A211A /* GlobalNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 251A424F2E0DCB85004A211A /* GlobalNetworking */; };
 		251A43022E0DE870004A211A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 251A43012E0DE870004A211A /* Kingfisher */; };
+		251A44572E10690A004A211A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 251A44562E10690A004A211A /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				251A44572E10690A004A211A /* GoogleMobileAds in Frameworks */,
 				251A43022E0DE870004A211A /* Kingfisher in Frameworks */,
 				251A42502E0DCB85004A211A /* GlobalNetworking in Frameworks */,
 			);
@@ -134,6 +136,7 @@
 			packageProductDependencies = (
 				251A424F2E0DCB85004A211A /* GlobalNetworking */,
 				251A43012E0DE870004A211A /* Kingfisher */,
+				251A44562E10690A004A211A /* GoogleMobileAds */,
 			);
 			productName = Vend;
 			productReference = 25C631E52E0C976C008077DF /* Vend.app */;
@@ -220,6 +223,7 @@
 			packageReferences = (
 				251A424E2E0DCB85004A211A /* XCRemoteSwiftPackageReference "GlobalNetworking" */,
 				251A43002E0DE870004A211A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				251A44552E10690A004A211A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 25C631E62E0C976C008077DF /* Products */;
@@ -417,6 +421,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vend/Vend.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WZ2D3R22K6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vend/Info.plist;
@@ -455,6 +460,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vend/Vend.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WZ2D3R22K6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vend/Info.plist;
@@ -629,6 +635,14 @@
 				minimumVersion = 8.3.3;
 			};
 		};
+		251A44552E10690A004A211A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -641,6 +655,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 251A43002E0DE870004A211A /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		251A44562E10690A004A211A /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 251A44552E10690A004A211A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
 
 @main
 struct VendApp: App {
+    init() {
+        setupGoogleMobileAds()
+    }
+    
     var body: some Scene {
         WindowGroup {
             PhotoListView()
         }
+    }
+    
+    private func setupGoogleMobileAds() {
+        MobileAds.shared.start()
     }
 }
