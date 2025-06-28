@@ -19,8 +19,8 @@ struct PhotoListView: View {
                     switch item {
                     case .content(let photoCellModel):
                         PhotoCellView(model: photoCellModel)
-                    case .ad:
-                        Text("Ad")
+                    case .ad(let bannerAdViewModel):
+                        BannerAdView(viewModel: bannerAdViewModel)
                     }
                 }
             }

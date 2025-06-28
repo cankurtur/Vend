@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import GoogleMobileAds
 
 // MARK: - PhotoListDisplayItem
 
 enum PhotoListDisplayItem: Identifiable {
     case content(PhotoCellModel)
-    case ad
+    case ad(BannerAdViewModel)
     
     var id: UUID {
         switch self {
