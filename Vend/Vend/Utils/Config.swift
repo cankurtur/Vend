@@ -27,4 +27,8 @@ extension Config {
     var googleAdAdaptiveBannerID: String {
         return configs.object(forKey: "googleAdAdaptiveBannerID") as! String
     }
+    
+    var apiFetchLimit: Int {
+        return configs.object(forKey: "apiFetchLimit") as! Int
+    }
 }
