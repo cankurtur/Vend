@@ -8,12 +8,12 @@
 import GlobalNetworking
 
 enum PhotoListEndpointItem: Endpoint {
-    case getPhotos
+    case getPhotos(start:Int, limit: Int)
     
     var path: String {
         switch self {
-        case .getPhotos:
-            return "/photos"
+        case .getPhotos(let start, let limit):
+            return "/photos?_start=\(start)&_limit=\(limit)"
         }
     }
     

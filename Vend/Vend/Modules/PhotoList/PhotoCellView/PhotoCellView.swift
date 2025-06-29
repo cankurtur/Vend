@@ -15,12 +15,14 @@ struct PhotoCellView: View {
     var body: some View {
         VStack {
             AppAsyncImage(url: model.thumbnailURL)
-                .frame(width: 300, height: 300)
             Text(model.title ?? "No Title")
+                .frame(height: 50)
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .bold()
         }
+        .frame(height: 300)
+        .padding()
     }
 }
 

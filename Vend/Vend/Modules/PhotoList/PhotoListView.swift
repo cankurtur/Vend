@@ -13,15 +13,13 @@ struct PhotoListView: View {
     @StateObject var viewModel = PhotoListViewModel()
     
     var body: some View {
-        ZStack {
-            List {
-                ForEach($viewModel.items) { $item in
-                    switch item {
-                    case .content(let photoCellModel):
-                        PhotoCellView(model: photoCellModel)
-                    case .ad(let bannerAdViewModel):
-                        BannerAdView(viewModel: bannerAdViewModel)
-                    }
+        List {
+            ForEach(viewModel.items, id: \.id) { item in
+                switch item {
+                case .content(let photoCellModel):
+                    PhotoCellView(model: photoCellModel)
+                case .ad(let bannerAdViewModel):
+                    BannerAdView(viewModel: bannerAdViewModel)
                 }
             }
         }
@@ -36,5 +34,3 @@ struct PhotoListView: View {
 #Preview {
     PhotoListView()
 }
-
-
