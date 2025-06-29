@@ -20,13 +20,21 @@ final class AdManager: NSObject {
         for _ in 0..<count {
             let viewWidth = UIScreen.main.bounds.width
             let adSize = portraitAnchoredAdaptiveBanner(width: viewWidth)
-
-            let banner = BannerView(adSize: adSize)
-            banner.adUnitID = Config.shared.googleAdAdaptiveBannerID
-            banner.delegate = self
-            banner.load(Request())
-            bannerItems.append(BannerAdViewModel(banner: banner, status: .loading))
+            
+            DispatchQueue.main.async {
+                let banner = BannerView(adSize: adSize)
+                banner.adUnitID = Config.shared.googleAdAdaptiveBannerID
+                banner.delegate = self
+                banner.load(Request())
+                self.bannerItems.append(BannerAdViewModel(banner: banner, status: .loading))
+            }
         }
+    }
+    
+    func getNextBanners(count: Int) -> [BannerAdViewModel] {
+        let actualCount = min(count, bannerItems.count)
+        let nextBanners = Array(bannerItems.prefix(actualCount))
+        return nextBanners
     }
 }
 
@@ -44,5 +52,9 @@ extension AdManager: BannerViewDelegate {
         if let index = self.bannerItems.firstIndex(where: {$0.banner === bannerView}) {
             self.bannerItems[index].status = .failure
         }
+    }
+    
+    func bannerViewDidRecordImpression(_ bannerView: BannerView) {
+        print("👀 Banner ad was shown: \(bannerView)")
     }
 }

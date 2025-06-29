@@ -11,30 +11,62 @@ import Foundation
 
 final class PhotoListViewModel: ObservableObject {
     @Published var items: [PhotoListDisplayItem] = []
+    
     private let photoListService: PhotoListServiceable
+    private var pageStartIndex: Int = 0
+    private let limit = Config.shared.apiFetchLimit
 
     init(photoListService: PhotoListServiceable = PhotoListService()) {
         self.photoListService = photoListService
+        AdManager.shared.preloadBannerAds(count: 3)
     }
     
-    @MainActor
     func getItems() async {
-        let response = await photoListService.getPhotos()
+        let response = await photoListService.getPhotos(start: pageStartIndex, limit: limit)
         
         switch response {
         case .success(let photos):
-            let newItems: [PhotoListDisplayItem] = photos.map { photo in
-                let model = PhotoCellModel(
-                    title: photo.title,
-                    photoURL: photo.url,
-                    thumbnailURL: photo.thumbnailUrl
-                )
-                return .content(model)
-            }
-            
-            items.append(contentsOf: newItems)
+            handleSuccessResponse(photos: photos)
+            pageStartIndex += limit
+            AdManager.shared.preloadBannerAds(count: 3)
         case .failure(let error):
-            print("Error: \(error)")
+            handleFailureResponse(error: error)
         }
+    }
+}
+
+// MARK: - Response Handler
+
+extension PhotoListViewModel {
+    func handleSuccessResponse(photos: [PhotoResponse]) {
+        let banners: [BannerAdViewModel] = AdManager.shared.getNextBanners(count: 3)
+        var result: [PhotoListDisplayItem] = []
+        
+        let newPhotoItems: [PhotoListDisplayItem] = photos.map { photo in
+            let model = PhotoCellModel(
+                title: photo.title,
+                photoURL: photo.url,
+                thumbnailURL: photo.thumbnailUrl
+            )
+            return .content(model)
+        }
+        
+        result.append(contentsOf: newPhotoItems)
+        
+        let insertIndices = [4,6,7]
+        for (i, index) in insertIndices.enumerated() {
+            guard index <= result.count, i < banners.count else { continue }
+            let adItem = PhotoListDisplayItem.ad(banners[i])
+            result.insert(adItem, at: index)
+        }
+        
+        DispatchQueue.main.async {
+            self.items.append(contentsOf: result)
+        }
+        
+    }
+    
+    func handleFailureResponse(error: APIClientError) {
+        
     }
 }
