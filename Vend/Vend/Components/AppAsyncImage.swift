@@ -19,7 +19,6 @@ struct AppAsyncImage: View {
                 }
                 .cacheOriginalImage(true)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
         } else {
             Image(systemName: "photo.fill")
         }
