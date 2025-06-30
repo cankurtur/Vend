@@ -51,6 +51,7 @@ extension AdManager: BannerViewDelegate {
     func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: any Error) {
         if let index = self.bannerItems.firstIndex(where: {$0.banner === bannerView}) {
             self.bannerItems[index].status = .failure
+            print("--- AdMob Error: \(error) ---")
         }
     }
     
