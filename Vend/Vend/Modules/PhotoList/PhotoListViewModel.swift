@@ -34,7 +34,6 @@ final class PhotoListViewModel: ObservableObject {
         case .success(let photos):
             handleSuccessResponse(photos: photos)
             pageStartIndex += limit
-            AdManager.shared.preloadBannerAds(count: 3)
             await MainActor.run {
                 isLoading = false
             }
@@ -58,10 +57,11 @@ final class PhotoListViewModel: ObservableObject {
 
 extension PhotoListViewModel {
     func handleSuccessResponse(photos: [PhotoResponse]) {
-        let banners: [BannerAdViewModel] = AdManager.shared.getNextBanners(count: 3)
         var result: [PhotoListDisplayItem] = []
+        var latextIndex = items.count
         
-        let newPhotoItems: [PhotoListDisplayItem] = photos.map { photo in
+        // Convert photos to the Content type
+        var newPhotoItems: [PhotoListDisplayItem] = photos.map { photo in
             let model = PhotoCellModel(
                 title: photo.title,
                 photoURL: photo.url,
@@ -70,19 +70,23 @@ extension PhotoListViewModel {
             return .content(model)
         }
         
-        result.append(contentsOf: newPhotoItems)
-        
-        let insertIndices = [4,6,7]
-        for (i, index) in insertIndices.enumerated() {
-            guard index <= result.count, i < banners.count else { continue }
-            let adItem = PhotoListDisplayItem.ad(banners[i])
-            result.insert(adItem, at: index)
+        // Add photos to the result array. In the meantime, add new add if the index is 4, 6, 7
+        while !newPhotoItems.isEmpty {
+            let mod = latextIndex  % 10
+            if mod == 4 || mod == 6 || mod == 7,
+               let firstBanner = AdManager.shared.getNextBanner() {
+                result.append(.ad(firstBanner))
+                AdManager.shared.preloadBannerAds(count: 1) // After adding ad, refetch one more ad in to the pool.
+            } else {
+                result.append(newPhotoItems.removeFirst())
+            }
+            latextIndex += 1
         }
         
+        // Append latest result to the list display items
         DispatchQueue.main.async {
             self.items.append(contentsOf: result)
         }
-        
     }
     
     func handleFailureResponse(error: APIClientError) {
