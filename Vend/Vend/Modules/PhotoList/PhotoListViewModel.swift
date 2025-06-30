@@ -11,6 +11,7 @@ import Foundation
 
 final class PhotoListViewModel: ObservableObject {
     @Published var items: [PhotoListDisplayItem] = []
+    @Published var isLoading = false
     
     private let photoListService: PhotoListServiceable
     private var pageStartIndex: Int = 0
@@ -22,6 +23,11 @@ final class PhotoListViewModel: ObservableObject {
     }
     
     func getItems() async {
+        guard !isLoading else { return }
+        await MainActor.run {
+            isLoading = true
+        }
+        
         let response = await photoListService.getPhotos(start: pageStartIndex, limit: limit)
         
         switch response {
@@ -29,8 +35,21 @@ final class PhotoListViewModel: ObservableObject {
             handleSuccessResponse(photos: photos)
             pageStartIndex += limit
             AdManager.shared.preloadBannerAds(count: 3)
+            await MainActor.run {
+                isLoading = false
+            }
         case .failure(let error):
             handleFailureResponse(error: error)
+            await MainActor.run {
+                isLoading = false
+            }
+        }
+    }
+    
+    
+    func paginateIfNeeded(for index: Int ) async {
+        if index == items.count - 1 {
+          await getItems()
         }
     }
 }

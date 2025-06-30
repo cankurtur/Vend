@@ -14,12 +14,24 @@ struct PhotoListView: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.items, id: \.id) { item in
-                switch item {
+            ForEach(0..<viewModel.items.count, id: \.self) { index in
+                switch viewModel.items[index] {
                 case .content(let photoCellModel):
-                    PhotoCellView(model: photoCellModel)
+                    VStack {
+                        Text("Position: \(index+1)")
+                        PhotoCellView(model: photoCellModel)
+                            .task {
+                                await viewModel.paginateIfNeeded(for: index)
+                            }
+                    }
                 case .ad(let bannerAdViewModel):
-                    BannerAdView(viewModel: bannerAdViewModel)
+                    VStack {
+                        Text("Position: \(index+1)")
+                        BannerAdView(viewModel: bannerAdViewModel)
+                            .task {
+                                await viewModel.paginateIfNeeded(for: index)
+                            }
+                    }
                 }
             }
         }
