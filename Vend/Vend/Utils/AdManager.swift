@@ -12,7 +12,9 @@ import GoogleMobileAds
 
 final class AdManager: NSObject {
     static let shared = AdManager()
+    
     @Published var bannerItems: [BannerAdViewModel] = []
+    private var currentBannerIndex: Int = 0
     
     private override init() { }
     
@@ -31,10 +33,10 @@ final class AdManager: NSObject {
         }
     }
     
-    func getNextBanners(count: Int) -> [BannerAdViewModel] {
-        let actualCount = min(count, bannerItems.count)
-        let nextBanners = Array(bannerItems.prefix(actualCount))
-        return nextBanners
+    func getNextBanner() -> BannerAdViewModel? {
+        guard let banner = bannerItems[safe: currentBannerIndex] else { return nil }
+        currentBannerIndex += 1
+        return banner
     }
 }
 
