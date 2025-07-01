@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: - Constant
 
 private enum Constant {
-    static let limit: Int = Config.shared.apiFetchLimit
+    static let limit: Int = 10
     static let defaultAdPreLoadCount: Int = 10
     static let paginationStartingPage: Int = 1
     static let adModValue: Int = 10
@@ -20,7 +21,7 @@ private enum Constant {
 
 final class PhotoListViewModel: ObservableObject {
     @Published private(set) var items: [PhotoListDisplayItem] = []
-    @Published private(set) var fetchState: FetchState = .initial
+    @Published var fetchState: FetchState = .initial
     
     private var currentAPIPage = Constant.paginationStartingPage
     private let photoListService: PhotoListServiceable
@@ -31,27 +32,19 @@ final class PhotoListViewModel: ObservableObject {
         AdManager.shared.preloadBannerAds(count: Constant.defaultAdPreLoadCount)
     }
     
+    @MainActor
     func getItems() async {
-        let response = await photoListService.getPhotos(page: currentAPIPage, limit: limit)
+        guard fetchState != .loading else { return }
+        fetchState = .loading
         
+        let response = await photoListService.getPhotos(page: currentAPIPage, limit: limit)
         switch response {
         case .success(let photos):
-            await MainActor.run {
-                fetchState = .success
-            }
+            fetchState = .success
             handleSuccessResponse(photos: photos)
             currentAPIPage.increase()
-            
         case .failure(let error):
-            await MainActor.run {
-                fetchState = .failure(message: error.message)
-            }
-        }
-    }
-    
-    func paginateIfNeeded(for index: Int ) async {
-        if index == items.count - 1 {
-            await getItems()
+            fetchState = .failure(message: error.message)
         }
     }
 }
@@ -88,7 +81,9 @@ extension PhotoListViewModel {
         
         // Append latest result to the list display items
         DispatchQueue.main.async {
-            self.items.append(contentsOf: result)
+            withAnimation {
+                self.items.append(contentsOf: result)
+            }
         }
     }
 }

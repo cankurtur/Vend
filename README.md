@@ -23,21 +23,21 @@ The app has one main module called `PhotoList`. Inside this module, we have both
 
 `PhotoListView`:
 - When the view loads, the initial API call is triggered using the `.task` modifier.
-- This call fetches the first 30 items from the API.
-- As the user scrolls down, the next 30 items are fetched again.
+- This call fetches the first 10 items from the API.
+- As the user scrolls down, the next 10 items are fetched again.
   
 `PhotoListViewModel`:
 - The ViewModel contains a `PhotoListService` to handle API calls.
 -	Once data is successfully fetched, the `handleSuccessResponse` function is triggered.
 
 `handleSuccessResponse`:
--	This function is responsible for inserting ads into the newly fetched 30 items at specific positions.
+-	This function is responsible for inserting ads into the newly fetched 10 items at specific positions.
 -	It uses the `latestIndex` property, which tracks the count of the current display items.
 -	Initially, the display array is empty, so `latestIndex` is 0.
--	After the first successful fetch, the array grows to 40 items, and the `latestIndex` is 40 now which is the index we need to append new items.
+-	After the first successful fetch, the array grows to 13 items, and the `latestIndex` is 13 now which is the index we need to append new items.
 -	A while loop is used to build a temporary result array by inserting either photo items or ads. It checks `latestIndex` % 10 to determine if an ad should be inserted at positions ending in 5, 7, or 8 (index positions 4, 6, 7).
 -	Ads are fetched from the `AdManager` during this process.
--	Once the 30-item batch is fully processed and ads are inserted in the correct positions, the temporary array is appended to the main display items on the main thread.
+-	Once the 10-item batch is fully processed and ads are inserted in the correct positions, the temporary array is appended to the main display items on the main thread.
 
 `AdManager`:
 - `AdManager` is a singleton that manages fetching banner ads from `GoogleMobileAds`.
@@ -84,7 +84,7 @@ Instead of fetching all photos in a single request and inserting ads at every 4t
 
 - Advantages of this approach:
   - Reduces fetch time during app launch, as we only load data when the user scrolls. This prevents downloading unnecessary data.
-  - Inserting items directly into the displayed list at fixed positions (e.g., 4, 6, 7) may cause UI issues such as debouncing or layout shifts. Instead, I fetch 30 photos, insert ad items into the list, and then append the modified list to the actual display items, ensuring smoother rendering and a better user experience.
+  - Inserting items directly into the displayed list at fixed positions (e.g., 4, 6, 7) may cause UI issues such as debouncing or layout shifts. Instead, I fetch 10 photos, insert ad items into the list, and then append the modified list to the actual display items, ensuring smoother rendering and a better user experience.
   
 ## Ideas for Improvement
 - `Combine` can be used to automate the `AdManager`. New ads are published to subscribers, and all view models subscribe to the current ad items. The `AdManager` automatically refreshes the ad pool when it is about to run out and publishes the new values to its subscribers.

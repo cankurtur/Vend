@@ -11,6 +11,8 @@ import Foundation
 enum FetchState: Equatable {
     /// Initial state before the fetch starts.
     case initial
+    /// The loading state.
+    case loading
     /// The fetch was successful.
     case success
     ///     /// An error occurred during the fetch, includes an `message` for error details.
