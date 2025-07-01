@@ -80,11 +80,11 @@ Instead of fetching all photos in a single request and inserting ads at every 4t
 
 - Disadvantages of this approach:
   - An API call is required whenever the user scrolls down.
-	-	Ad insertion must be handled with each new response.
+  - Ad insertion must be handled with each new response.
 
 - Advantages of this approach:
   - Reduces fetch time during app launch, as we only load data when the user scrolls. This prevents downloading unnecessary data.
-	-	Inserting items directly into the displayed list at fixed positions (e.g., 4, 6, 7) may cause UI issues such as debouncing or layout shifts. Instead, I fetch 30 photos, insert ad items into the list, and then append the modified list to the actual display items, ensuring smoother rendering and a better user experience.
+  - Inserting items directly into the displayed list at fixed positions (e.g., 4, 6, 7) may cause UI issues such as debouncing or layout shifts. Instead, I fetch 30 photos, insert ad items into the list, and then append the modified list to the actual display items, ensuring smoother rendering and a better user experience.
   
 ## Ideas for Improvement
 - `Combine` can be used to automate the `AdManager`. New ads are published to subscribers, and all view models subscribe to the current ad items. The `AdManager` automatically refreshes the ad pool when it is about to run out and publishes the new values to its subscribers.
