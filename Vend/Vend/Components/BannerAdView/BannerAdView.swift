@@ -18,13 +18,13 @@ struct BannerAdView: View {
             switch viewModel.status {
             case .loading:
                 HStack(spacing: 8) {
-                    Text("Advertising...")
+                    Text(Localizable.advertising)
                     ProgressView()
                 }
             case .success:
                 BannerAdViewRepresentable(bannerView: viewModel.banner)
             case .failure:
-                Text("Advertising failed")
+                Text(Localizable.advertisingFailed)
             }
         }
         .frame(width: UIScreen.main.bounds.width, height: 300)
