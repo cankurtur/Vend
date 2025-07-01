@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  Vend
+
+  Created by Can Kurtur on 2025-07-01.
+  
+*/
+
+//MARK: - General
+
+"general.warning" = "Warning";
+"general.ok" = "OK";
+"general.empty" = "";
+"general.somethingWentWrong" = "Something went wrong.";
+"general.advertising" = "Advertising...";
+"general.advertisingFailed" = "Advertising failed";
+
+//MARK: - AdManager
+"adManager.bannerAdWasShown" = "👀 Banner ad was shown: ";
+
+//MARK: - PhotoListView
+"photoList.position" = "Position: %d";
+"photoList.noTitle" = "No Title";

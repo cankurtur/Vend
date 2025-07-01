@@ -1,0 +1,42 @@
+{
+  "originHash" : "c7412345b49231c382d1e7d2c9007acd0c3d63a716d2f7d4ad7e1c97b09bd1c9",
+  "pins" : [
+    {
+      "identity" : "globalnetworking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cankurtur/GlobalNetworking",
+      "state" : {
+        "revision" : "d20846d5cdc0b5c86019c06109c43c44ea5dcd91",
+        "version" : "5.3.0"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "010a06c4387cea2d13606222b6c08e0454e6dd2d",
+        "version" : "8.3.3"
+      }
+    },
+    {
+      "identity" : "swift-package-manager-google-mobile-ads",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
+      "state" : {
+        "revision" : "946770157e526c0fa8807ed516c3d9f81106e30a",
+        "version" : "12.6.0"
+      }
+    },
+    {
+      "identity" : "swift-package-manager-google-user-messaging-platform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+      "state" : {
+        "revision" : "69b53394c5258b3fe688e625a998047d1f393497",
+        "version" : "3.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
