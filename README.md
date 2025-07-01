@@ -89,7 +89,8 @@ Instead of fetching all photos in a single request and inserting ads at every 4t
 ## Ideas for Improvement
 - `Combine` can be used to automate the `AdManager`. New ads are published to subscribers, and all view models subscribe to the current ad items. The `AdManager` automatically refreshes the ad pool when it is about to run out and publishes the new values to its subscribers.
 
-
+## Optional Feature
+Debug/Release scheme types were added to configure the app for different environments.
 
 
 
