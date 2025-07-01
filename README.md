@@ -18,6 +18,7 @@
 -	`GoogleMobileAds`: Integrated for managing ads.
   
 ## Architecture Overview:
+![image](https://github.com/user-attachments/assets/7f2fd6e7-3885-4feb-88ef-5f518a2aec57)
 
 The app has one main module called `PhotoList`. Inside this module, we have both the `View` and `ViewModel` components.
 
