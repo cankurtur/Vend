@@ -33,6 +33,19 @@ final class AdManager: NSObject {
         }
     }
     
+    func loadNewBanner() {
+        let viewWidth = UIScreen.main.bounds.width
+        let adSize = portraitAnchoredAdaptiveBanner(width: viewWidth)
+
+        DispatchQueue.main.async {
+            let banner = BannerView(adSize: adSize)
+            banner.adUnitID = Config.shared.googleAdAdaptiveBannerID
+            banner.delegate = self
+            banner.load(Request())
+            self.bannerItems.append(BannerAdViewModel(banner: banner, status: .loading))
+        }
+    }
+    
     func getNextBanner() -> BannerAdViewModel? {
         guard let banner = bannerItems[safe: currentBannerIndex] else { return nil }
         currentBannerIndex += 1
@@ -53,11 +66,10 @@ extension AdManager: BannerViewDelegate {
     func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: any Error) {
         if let index = self.bannerItems.firstIndex(where: {$0.banner === bannerView}) {
             self.bannerItems[index].status = .failure
-            print("--- AdMob Error: \(error) ---")
         }
     }
     
     func bannerViewDidRecordImpression(_ bannerView: BannerView) {
-        print("👀 Banner ad was shown: \(bannerView)")
+        print(Localizable.bannerAdWasShown + "\(bannerView)")
     }
 }
