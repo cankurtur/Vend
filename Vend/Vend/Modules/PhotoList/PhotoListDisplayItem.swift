@@ -16,8 +16,10 @@ enum PhotoListDisplayItem: Identifiable {
     
     var id: UUID {
         switch self {
-        case .ad, .content:
-            return UUID()
+        case .ad(let model):
+            return model.id
+        case .content(let model):
+            return model.id
         }
     }
 }
