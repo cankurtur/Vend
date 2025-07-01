@@ -7,48 +7,51 @@
 
 import Foundation
 
+// MARK: - Constant
+
+private enum Constant {
+    static let limit: Int = Config.shared.apiFetchLimit
+    static let defaultAdPreLoadCount: Int = 10
+    static let paginationStartingPage: Int = 1
+    static let adModValue: Int = 10
+}
+
 // MARK: - PhotoListViewModel
 
 final class PhotoListViewModel: ObservableObject {
-    @Published var items: [PhotoListDisplayItem] = []
-    @Published var isLoading = false
+    @Published private(set) var items: [PhotoListDisplayItem] = []
+    @Published private(set) var fetchState: FetchState = .initial
     
+    private var currentAPIPage = Constant.paginationStartingPage
     private let photoListService: PhotoListServiceable
-    private var pageStartIndex: Int = 0
-    private let limit = Config.shared.apiFetchLimit
-
+    private let limit = Constant.limit
+    
     init(photoListService: PhotoListServiceable = PhotoListService()) {
         self.photoListService = photoListService
-        AdManager.shared.preloadBannerAds(count: 3)
+        AdManager.shared.preloadBannerAds(count: Constant.defaultAdPreLoadCount)
     }
     
     func getItems() async {
-        guard !isLoading else { return }
-        await MainActor.run {
-            isLoading = true
-        }
-        
-        let response = await photoListService.getPhotos(start: pageStartIndex, limit: limit)
+        let response = await photoListService.getPhotos(page: currentAPIPage, limit: limit)
         
         switch response {
         case .success(let photos):
-            handleSuccessResponse(photos: photos)
-            pageStartIndex += limit
             await MainActor.run {
-                isLoading = false
+                fetchState = .success
             }
+            handleSuccessResponse(photos: photos)
+            currentAPIPage.increase()
+            
         case .failure(let error):
-            handleFailureResponse(error: error)
             await MainActor.run {
-                isLoading = false
+                fetchState = .failure(message: error.message)
             }
         }
     }
     
-    
     func paginateIfNeeded(for index: Int ) async {
         if index == items.count - 1 {
-          await getItems()
+            await getItems()
         }
     }
 }
@@ -72,15 +75,15 @@ extension PhotoListViewModel {
         
         // Add photos to the result array. In the meantime, add new add if the index is 4, 6, 7
         while !newPhotoItems.isEmpty {
-            let mod = latextIndex  % 10
+            let mod = latextIndex % Constant.adModValue
             if mod == 4 || mod == 6 || mod == 7,
                let firstBanner = AdManager.shared.getNextBanner() {
                 result.append(.ad(firstBanner))
-                AdManager.shared.preloadBannerAds(count: 1) // After adding ad, refetch one more ad in to the pool.
+                AdManager.shared.loadNewBanner()
             } else {
                 result.append(newPhotoItems.removeFirst())
             }
-            latextIndex += 1
+            latextIndex.increase()
         }
         
         // Append latest result to the list display items
@@ -88,8 +91,5 @@ extension PhotoListViewModel {
             self.items.append(contentsOf: result)
         }
     }
-    
-    func handleFailureResponse(error: APIClientError) {
-        
-    }
 }
+

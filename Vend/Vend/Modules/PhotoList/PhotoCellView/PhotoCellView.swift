@@ -15,7 +15,7 @@ struct PhotoCellView: View {
     var body: some View {
         VStack {
             AppAsyncImage(url: model.thumbnailURL)
-            Text(model.title ?? "No Title")
+            Text(model.title ?? Localizable.noTitle)
                 .frame(height: 50)
                 .font(.headline)
                 .multilineTextAlignment(.center)

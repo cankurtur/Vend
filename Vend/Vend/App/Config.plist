@@ -9,7 +9,7 @@
 		<key>googleAdAdaptiveBannerID</key>
 		<string>ca-app-pub-3940256099942544/2435281174</string>
 		<key>apiFetchLimit</key>
-		<integer>10</integer>
+		<integer>30</integer>
 	</dict>
 	<key>Release</key>
 	<dict>
@@ -18,7 +18,7 @@
 		<key>googleAdAdaptiveBannerID</key>
 		<string>ca-app-pub-3940256099942544/2435281174</string>
 		<key>apiFetchLimit</key>
-		<integer>10</integer>
+		<integer>30</integer>
 	</dict>
 </dict>
 </plist>

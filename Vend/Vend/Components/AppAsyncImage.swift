@@ -20,7 +20,7 @@ struct AppAsyncImage: View {
                 .cacheOriginalImage(true)
                 .resizable()
         } else {
-            Image(systemName: "photo.fill")
+            Images.photoFill
         }
     }
 }
