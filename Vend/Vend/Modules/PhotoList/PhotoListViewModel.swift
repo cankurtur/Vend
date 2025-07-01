@@ -61,7 +61,7 @@ final class PhotoListViewModel: ObservableObject {
 extension PhotoListViewModel {
     func handleSuccessResponse(photos: [PhotoResponse]) {
         var result: [PhotoListDisplayItem] = []
-        var latextIndex = items.count
+        var latestIndex = items.count
         
         // Convert photos to the Content type
         var newPhotoItems: [PhotoListDisplayItem] = photos.map { photo in
@@ -75,7 +75,7 @@ extension PhotoListViewModel {
         
         // Add photos to the result array. In the meantime, add new add if the index is 4, 6, 7
         while !newPhotoItems.isEmpty {
-            let mod = latextIndex % Constant.adModValue
+            let mod = latestIndex % Constant.adModValue
             if mod == 4 || mod == 6 || mod == 7,
                let firstBanner = AdManager.shared.getNextBanner() {
                 result.append(.ad(firstBanner))
@@ -83,7 +83,7 @@ extension PhotoListViewModel {
             } else {
                 result.append(newPhotoItems.removeFirst())
             }
-            latextIndex.increase()
+            latestIndex.increase()
         }
         
         // Append latest result to the list display items
